@@ -1,2 +1,2 @@
 # FTP-sorting
-Triage automatisé de fichiers reçu par FTP
+Triage automatisé de fichiers reçu par FTP sur Linux
