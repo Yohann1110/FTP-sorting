@@ -10,5 +10,16 @@ password = "jyDK33a9xY6n"
 ftp = ftplib.FTP(host, username, password)
 ftp.encoding = "utf-8"
 
-# List folders in the directory
+# Creation of directory
+FtpImage = ftp.mkd("image")
+FtpDocument = ftp.mkd("document")
+ftpNote = ftp.mkd("note")
+ftpErreur = ftp.mkd("erreur")
+ftpDivers = ftp.mkd("divers")
+
+# Move folders in the correct directory
+
+
+# List folders and directory
 ftp.dir()
+
