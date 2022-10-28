@@ -14,7 +14,7 @@ password = "jyDK33a9xY6n"
 # Connection to FTP Server
 ftp = ftplib.FTP(host, username, password)
 ftp.encoding = "utf-8"
-#ftp.cwd('in')
+# ftp.cwd('in')
 
 # Creation of directory
 
@@ -28,27 +28,26 @@ if not "image" in dirList:
     ftpErreur = ftp.mkd("erreur")
     ftpDivers = ftp.mkd("divers")
 
-filteredList    = []
-allError        = []
-allImage        = []
-allDivers       = []
+filteredList = []
+allError = []
+allImage = []
+allDivers = []
 
 # Move folders in the correct directory
 
-#ajout des documents à traiter, si il n'y pas de point alors il n'y a pas d'extentsion et donc c'est une erreur
+# ajout des documents à traiter, si il n'y pas de point alors il n'y a pas d'extentsion et donc c'est une erreur
 for z in dirList:
     for i in list(z):
         if i == ".":
             filteredList.append(z)
-        else :
+        else:
             allError.append(z)
 
 print("Entering the filter stage")
 
-for file in filteredList: 
+for file in filteredList:
     if fnmatch.fnmatch(file, '*.jpg'):
         ftp.rename(file, "/image/" + file)
-        #ftp.delete(file)
- 
-print("end") 
+
+print("end")
 ftp.quit()
