@@ -20,12 +20,6 @@ if not "image" in ListAll:
     ftp.mkd("erreur")
     ftp.mkd("divers")
 
-# FtpImage = ftp.mkd("image")
-# FtpDocument = ftp.mkd("document")
-# ftpNote = ftp.mkd("note")
-# ftpErreur = ftp.mkd("erreur")
-# ftpDivers = ftp.mkd("divers")
-
 # Move folders in the correct directory
 # ftp.rename("cafe.png", "/image/cafe.png")
 
