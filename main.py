@@ -5,7 +5,7 @@ import glob
 import fnmatch
 from tkinter.tix import IMAGETEXT
 import os
-from connect import connection
+from methods import connection
 
 # Connect to ftp via method
 ftp = connection()
