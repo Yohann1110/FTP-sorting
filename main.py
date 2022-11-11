@@ -2,8 +2,12 @@
 import ftplib
 import fnmatch
 import os
+from email.message import EmailMessage
+
 from allFunction import findpoint_, removeFolderFromList, renameFileText
 from methods import connection
+import smtplib
+from methods import mail, email_adress
 
 
 # Connect to ftp via method
@@ -69,6 +73,42 @@ for file in allErrors:
     destination_folder = "/erreur/"
     destination        = destination_folder + file
     ftp.rename(file, destination )
+
+# Send the mail for the erreurs and divers
+
+if allDivers or allErrors:
+    # Method to send mail
+    fileName = ""
+
+    for file in allDivers:
+        fileName += "- "
+        fileName += file
+        fileName += "\n"
+
+    fileName2 = ""
+
+    for file in allErrors:
+        fileName2 += "- "
+        fileName2 += file
+        fileName2 += "\n"
+
+    msg = EmailMessage()
+    msg['Subject'] = 'Divers et Erreurs : '
+    msg['From'] = 'yoch5000@gmail.com'
+    msg['To'] = 'yoch2000@gmail.com'
+    msg.set_content(f"\nLes extensions pour les fichiers suivants ne sont pas encore enregistrées :\n{fileName}ces fichiers seront stockés dans le dossier 'divers'.\n\n" \
+           f"Il y'a eu une erreur pour les fichiers :\n{fileName2}qui seront stockés dans le dossier 'erreur'.")
+
+    try:
+        send = mail()
+        send.send_message(msg)
+        send.close()
+
+    except Exception as ex:
+        print("Something went wrong for the email : ", ex)
+
+else:
+    pass
 
 ftp.quit()
 
