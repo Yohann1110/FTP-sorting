@@ -2,8 +2,9 @@
 import ftplib
 import fnmatch
 import os
-from allFunction import findpoint_, removeFolderFromList
+from allFunction import findpoint_, removeFolderFromList, renameFileText
 from methods import connection
+
 
 # Connect to ftp via method
 ftp = connection()
@@ -42,7 +43,11 @@ for file in dirList:
     if fnmatch.fnmatch(file, '*.pptx'):
         ftp.rename(file, "/document/" + file)
     if fnmatch.fnmatch(file, '*.txt'):
-        ftp.rename(file, "/note/" + file)
+        lines = []
+        ftp.retrlines("RETR " + file, lines.append) #place le contenu du fichier txt dans un string
+        myString=renameFileText(lines)
+        ftp.rename(file, "/note/" + myString + ".txt")
+
 
 dirList = ftp.nlst()
 removeFolderFromList(dirList)
