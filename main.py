@@ -1,21 +1,17 @@
 # Import modules
-from ast import Delete
 import ftplib
-import glob
 import fnmatch
-from tkinter.tix import IMAGETEXT
 import os
+from allFunction import findpoint_, removeFolderFromList
 from methods import connection
 
 # Connect to ftp via method
 ftp = connection()
 
-# Creation of directory
-
 # List folders and directory .nlst returns name of files and directories of list type
 dirList = ftp.nlst()
 
-# Permet de controler si on a déjà créer les dossiers
+#if there is no directory, creation of all the new directory
 if not "image" in dirList:
     FtpImage = ftp.mkd("image")
     FtpDocument = ftp.mkd("document")
@@ -23,28 +19,52 @@ if not "image" in dirList:
     ftpErreur = ftp.mkd("erreur")
     ftpDivers = ftp.mkd("divers")
 
-filteredList = []
-allError = []
-allImage = []
-allDivers = []
+#remove the folder from the list
+removeFolderFromList(dirList)
+dirList.remove('.')
+dirList.remove('..')
 
-# Entering the filter stage
+allDivers = []
+allErrors = []
+
+#Entering the filter stage
 for file in dirList:
     if fnmatch.fnmatch(file, '*.jpg'):
         ftp.rename(file, "/image/" + file)
+    if fnmatch.fnmatch(file, '*.png'):
+        ftp.rename(file, "/image/" + file)
+    if fnmatch.fnmatch(file, '*.jpeg'):
+        ftp.rename(file, "/image/" + file)
+    if fnmatch.fnmatch(file, '*.docx'):
+        ftp.rename(file, "/document/" + file)
+    if fnmatch.fnmatch(file, '*.xlsx'):
+        ftp.rename(file, "/document/" + file)
+    if fnmatch.fnmatch(file, '*.pptx'):
+        ftp.rename(file, "/document/" + file)
+    if fnmatch.fnmatch(file, '*.txt'):
+        ftp.rename(file, "/note/" + file)
 
+dirList = ftp.nlst()
+removeFolderFromList(dirList)
+dirList.remove('.')
+dirList.remove('..')
 
-# Filter for divers
-#for z in dirList:
-#    for i in list(z):
-#        if i == ".":
-#            ftp.rename(z, "/divers/" + z)
-#        if z=="image" or z=="document" or z=="note" or z=="divers" or z=="erreur" :
-#            pass
-#        else  :
-#            ftp.rename(z, "/erreur/" + z)
+for file in dirList:
+    if findpoint_(file):
+        allDivers.append(file)
+    else :
+        allErrors.append(file)
 
-print("end")
+for file in allDivers:
+    destination_folder = "/divers/"
+    destination        = destination_folder + file
+    ftp.rename(file, destination )
+
+for file in allErrors:
+    destination_folder = "/erreur/"
+    destination        = destination_folder + file
+    ftp.rename(file, destination )
+
 ftp.quit()
 
 

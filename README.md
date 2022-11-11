@@ -1,8 +1,11 @@
 # FTP-sorting
 Triage automatisé de fichiers reçu par FTP sur Linux
 
-le programme va se dérouler en 3 étapes :
+file .gitignore     :
+permet de cacher les informations permettant de se connecter à notre serveur ftp
 
-1. faire la liste de tous les fichiers dans le dossier qui se trouve dans notre répertoire ftp
-2. créer les nouveaux dossiers qui vont contenir les différents fichiers selon leur extensions
-3. déplacer les fichiers dans les bons dossiers en fonction de leur extension
+file allFunction    :    
+fichier contenant toutes les fonctions permettant de trier les fichier 
+    
+file main           :
+fichier principale 
