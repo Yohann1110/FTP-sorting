@@ -1,12 +1,12 @@
 # Import modules
-import ftplib
-import fnmatch
+import ftplib       #ftp connection module
+import fnmatch      #test whether the filename string matches the pattern string module
 import os
 from email.message import EmailMessage
 
 from allFunction import findpoint_, removeFolderFromList, renameFileText
 from methods import connection
-import smtplib
+import smtplib      #sending mail module
 from methods import mail, email_adress
 
 
@@ -34,21 +34,21 @@ allErrors = []
 
 #Entering the filter stage
 for file in dirList:
-    if fnmatch.fnmatch(file, '*.jpg'):
+    if fnmatch.fnmatch(file, '*.jpg'):              #If the file extension is .jpg send it to "image" folder
         ftp.rename(file, "/image/" + file)
-    if fnmatch.fnmatch(file, '*.png'):
+    if fnmatch.fnmatch(file, '*.png'):              #If the file extension is .png send it to "image" folder
         ftp.rename(file, "/image/" + file)
-    if fnmatch.fnmatch(file, '*.jpeg'):
+    if fnmatch.fnmatch(file, '*.jpeg'):             #If the file extension is .jpeg send it to "image" folder
         ftp.rename(file, "/image/" + file)
-    if fnmatch.fnmatch(file, '*.docx'):
+    if fnmatch.fnmatch(file, '*.docx'):             #If the file extension is .docx send it to "document" folder
         ftp.rename(file, "/document/" + file)
-    if fnmatch.fnmatch(file, '*.xlsx'):
+    if fnmatch.fnmatch(file, '*.xlsx'):             #If the file extension is .xlsx send it to "document" folder
         ftp.rename(file, "/document/" + file)
-    if fnmatch.fnmatch(file, '*.pptx'):
+    if fnmatch.fnmatch(file, '*.pptx'):             #If the file extension is .pptx send it to "document" folder
         ftp.rename(file, "/document/" + file)
-    if fnmatch.fnmatch(file, '*.txt'):
+    if fnmatch.fnmatch(file, '*.txt'):              #If the file extension is .txt rename + send it to "note" folder
         lines = []
-        ftp.retrlines("RETR " + file, lines.append) #place le contenu du fichier txt dans un string
+        ftp.retrlines("RETR " + file, lines.append) #put the contents of the txt file into a string
         myString=renameFileText(lines)
         ftp.rename(file, "/note/" + myString + ".txt")
 
@@ -64,11 +64,13 @@ for file in dirList:
     else :
         allErrors.append(file)
 
+#if the file has a non recognised extension we send it to "divers" folder
 for file in allDivers:
     destination_folder = "/divers/"
     destination        = destination_folder + file
     ftp.rename(file, destination )
 
+#if the file has no extension we send it to "erreur" folder
 for file in allErrors:
     destination_folder = "/erreur/"
     destination        = destination_folder + file
@@ -79,14 +81,14 @@ for file in allErrors:
 if allDivers or allErrors:
     # Method to send mail
     fileName = ""
-
+#We recover the name of the file sent in the "divers" folder
     for file in allDivers:
         fileName += "- "
         fileName += file
         fileName += "\n"
 
     fileName2 = ""
-
+#We recover the name of the file sent in the "erreur" folder
     for file in allErrors:
         fileName2 += "- "
         fileName2 += file
