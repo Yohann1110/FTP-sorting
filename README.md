@@ -5,7 +5,7 @@ file .gitignore     :
 permet de cacher les informations permettant de se connecter à notre serveur ftp
 
 file allFunction    :    
-fichier contenant toutes les fonctions permettant de trier les fichier 
+fichier contenant différentes fonctions appelé dans main.py 
     
 file main           :
 fichier principale 
