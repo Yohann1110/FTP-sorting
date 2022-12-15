@@ -1,1 +1,0 @@
-Notre projet consiste en: Triage automatisé de fichiers reçu par FTP sous linux
