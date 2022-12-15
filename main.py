@@ -93,14 +93,14 @@ if allDivers or allErrors:
         fileName2 += "- "
         fileName2 += file
         fileName2 += "\n"
-
+#Email settings
     msg = EmailMessage()
     msg['Subject'] = 'Divers et Erreurs : '
     msg['From'] = 'yoch5000@gmail.com'
     msg['To'] = 'yoch2000@gmail.com'
     msg.set_content(f"\nLes extensions pour les fichiers suivants ne sont pas encore enregistrées :\n{fileName}ces fichiers seront stockés dans le dossier 'divers'.\n\n" \
            f"Il y'a eu une erreur pour les fichiers :\n{fileName2}qui seront stockés dans le dossier 'erreur'.")
-
+#Sending mail
     try:
         send = mail()
         send.send_message(msg)
